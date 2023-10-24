@@ -17,9 +17,6 @@ class Post extends Model
     public $slug;
     public $body;
 
-
-
-
     public function __construct($title, $date, $excerpt, $slug, $body)
     {
         $this->title = $title;
