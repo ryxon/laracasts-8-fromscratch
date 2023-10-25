@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Symfony\Component\Yaml\Yaml;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,8 +32,8 @@ Route::get('/', function () {
 Route::get('post/{post}', function ($slug) {
 
     return view('post', [
-            'post' => Post::find($slug)
-        ]);
+        'post' => Post::findOrFail($slug)
+    ]);
 
 });
 

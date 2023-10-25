@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Yaml\Yaml;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+// fix this Class "App\Models\ModelNotFoundException" not found
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class Post extends Model
 {
     use HasFactory;
@@ -80,11 +83,19 @@ class Post extends Model
 
     public static function find($slug)
     {
-        $posts = static::allPosts();
-        $post = $posts->firstWhere('slug', $slug);
-//        dd($post);
+        return static::allPosts()->firstWhere('slug', $slug);
+    }
+
+    public static function findOrFail($slug){
+
+        $post = static::find($slug);
+
+        if(!$post){
+            throw new ModelNotFoundException();
+        }
 
         return $post;
+
     }
 }
 
