@@ -27,15 +27,17 @@ Route::get('/welcome', function () {
 Route::get('/', function () {
 
     return view('posts', [
-        'posts' => Post::allPosts()
+        'posts' => Post::all()
     ]);
 });
 
-//Get a single post by slug via yamlFrontmatter method above
-Route::get('post/{post}', function ($slug) {
+// Get a post using Route Model Binding
+// Normally you would do this: {post:slug}
+// But when getRouteKeyName() is overwritten in the Post model, you can do this: {post} as is the case in the Post model right now
+Route::get('post/{post}', function (Post $post) { // Post::where('slug', $slug)->firstOrFail();
 
     return view('post', [
-        'post' => Post::findOrFail($slug)
+        'post' => $post
     ]);
 
 });
