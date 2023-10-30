@@ -5,6 +5,9 @@ use App\Models\Post;
 use Symfony\Component\Yaml\Yaml;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
+//use controller
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,7 +50,8 @@ Route::get('post/{post}', function ($slug) {
 
 //get request with test returns foo => bar array as json
 Route::get('test',function(){
-    return ['foo' => 'bar'];
+    //call foobar function of the TestController
+    return TestController::foobar();
 });
 
 
