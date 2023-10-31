@@ -34,12 +34,11 @@ Route::get('/', function () {
 // Get a post using Route Model Binding
 // Normally you would do this: {post:slug}
 // But when getRouteKeyName() is overwritten in the Post model, you can do this: {post} as is the case in the Post model right now
+// a Post model is provided (Post $post) in the function as a parameter for route model binding: Laravel will automatically fetch the post from the database based on the slug
 Route::get('post/{post}', function (Post $post) { // Post::where('slug', $slug)->firstOrFail();
-
     return view('post', [
         'post' => $post
     ]);
-
 });
 
 //Find the post by using the Post model
