@@ -22,6 +22,12 @@
         @dump($loop)
         <article class="{{ $loop->even ? 'foobar' : '' }}">
             <h1><a href="/post/{{ $post->slug  }}">{!! $post->title !!}</a></h1>
+
+{{--            create category link--}}
+            <p>
+                <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a>
+            </p>
+
             <div>date: {{ $post->date  }}</div>
             <div>{{ $post->excerpt }}</div>
             <div>{!! $post->body !!}</div>

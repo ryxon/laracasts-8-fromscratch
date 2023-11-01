@@ -10,10 +10,17 @@ class Post extends Model
     use HasFactory;
 
     //allow mass assignment of all fields
-    protected $fillable = ['title', 'excerpt', 'body'];
+    protected $fillable = ['title', 'excerpt', 'body', 'category_id', 'slug'];
 
     //guard id from mass assignment
     protected $guarded = ['id'];
+
+    //posts have one category
+    public function category()
+    {
+        //all relationship types: hasOne, hasMany, belongsTo, belongsToMany, morphOne, morphMany, morphTo, morphToMany, morphedByMany
+        return $this->belongsTo(Category::class);
+    }
 
     //set route key to slug
     public function getRouteKeyName()

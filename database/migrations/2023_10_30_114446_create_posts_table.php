@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            //category_id
+            $table->foreignId('category_id');
             $table->string('title');
             $table->string('slug')->unique();
             //excerpt
@@ -34,3 +36,16 @@ return new class extends Migration
         Schema::dropIfExists('posts');
     }
 };
+
+//create a post with one line
+Post::create(['title' => 'My first post',
+    'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, nunc nisl aliquam nunc, quis aliquet nunc nisl',
+    'body' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, n',
+    'category_id' => 1
+]);
+//another one
+//Post::create(['title' => 'My second post', 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, nunc nisl aliquam nunc, quis aliquet nunc nisl', 'body' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, n', 'category_id' => 2]);
+//another one
+//Post::create(['title' => 'My third post', 'excerpt' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, nunc nisl aliquam nunc, quis aliquet nunc nisl', 'body' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget ultrices ultrices, n', 'category_id' => 3]);
+//another one
+//

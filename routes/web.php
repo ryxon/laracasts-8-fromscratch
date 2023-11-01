@@ -83,3 +83,13 @@ Route::get('post2/{post}', function ($slug) {
         'title' => $slug
     ]);
 })->where('post','[A-z_\-]+'); //regular expression for the post var. It can only be letters, underscores and dashes
+
+//go to testcontroller and execute createPosts function
+Route::get('createPosts', [TestController::class, 'createPosts']);
+
+//category route that shows all posts of a category
+Route::get('category/{category:slug}', function (\App\Models\Category $category) {
+    return view('posts', [
+        'posts' => $category->posts
+    ]);
+});
