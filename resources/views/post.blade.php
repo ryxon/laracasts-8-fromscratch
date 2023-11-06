@@ -17,6 +17,7 @@
 
     <article>
         <h1><a href="/post/{{ $post->slug  }}">{!! $post->title !!}</a></h1>
+        <p>By <a href="/posts/author/{{ $post->user->username }}">{{ $post->user->name }}</a> in <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
         <div>date: {{ $post->date  }}</div>
         <div>{{ $post->excerpt }}</div>
         <div>{!! $post->body !!}</div>

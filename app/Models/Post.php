@@ -15,6 +15,11 @@ class Post extends Model
     //guard id from mass assignment
     protected $guarded = ['id'];
 
+    //this will be loaded by default, to prevent n+1 problem
+//    protected $with = ['category', 'user'];
+//   then when loading posts without category and user, use this:
+//    Post::without('category', 'user')->get();
+
     //posts have one category
     public function category()
     {
@@ -26,6 +31,18 @@ class Post extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    //extend create function to include slug from title value
+    public static function create(array $attributes = [])
+    {
+        $attributes['slug'] = str_slug($attributes['title']);
+        return static::query()->create($attributes);
     }
 
     //find by id or slug with find method
@@ -49,13 +66,6 @@ class Post extends Model
 //            return static::where('id', $slug)->firstOrFail();
 //        }
 //    }
-
-    //extend create function to include slug from title value
-    public static function create(array $attributes = [])
-    {
-        $attributes['slug'] = str_slug($attributes['title']);
-        return static::query()->create($attributes);
-    }
 }
 function str_slug($title) {
     $slug = strtolower($title);

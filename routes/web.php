@@ -26,8 +26,15 @@ Route::get('/welcome', function () {
 
 Route::get('/', function () {
 
+    //logs all queries that are executed including the bindings
+    \Illuminate\Support\Facades\DB::listen(function ($query) {
+        logger($query->sql, $query->bindings);
+    });
+
     return view('posts', [
-        'posts' => Post::all()
+//        'posts' => Post::all()
+        //use with to prevent n+1 problem, so only 2 queries will be executed instead of 1 + the number of posts
+        'posts' => Post::with('category','user')->get()
     ]);
 });
 
@@ -38,6 +45,15 @@ Route::get('/', function () {
 Route::get('post/{post}', function (Post $post) { // Post::where('slug', $slug)->firstOrFail();
     return view('post', [
         'post' => $post
+    ]);
+});
+
+Route::get('posts/author/{user:username}', function (\App\Models\User $user) {
+    return view('posts', [
+        //get posts from user but preven n+1 problem
+        'posts' => $user->posts->load(['category', 'user'])
+        //Why are we using load here instead of with?
+        //Because we are not using the posts relationship on the user model, but the posts property on the user model
     ]);
 });
 
@@ -90,6 +106,6 @@ Route::get('createPosts', [TestController::class, 'createPosts']);
 //category route that shows all posts of a category
 Route::get('category/{category:slug}', function (\App\Models\Category $category) {
     return view('posts', [
-        'posts' => $category->posts
+        'posts' => $category->posts->load(['category', 'user'])
     ]);
 });

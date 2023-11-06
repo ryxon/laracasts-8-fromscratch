@@ -8,11 +8,11 @@
 </head>
 <body>
 <div id="header">
-    <h1>This is the LAYOUT:</h1>
+    <h1>layouts.layout:This is the LAYOUT:</h1>
 </div>
 <div id="content">
     @yield('header')
-    <h3>This is the CONTENT:</h3>
+    <h3>layouts.layout:This is the CONTENT:</h3>
     @yield('content')
 </div>
 

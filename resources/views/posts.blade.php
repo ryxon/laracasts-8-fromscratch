@@ -1,9 +1,9 @@
 {{--in this we use the section and yield approach, in the post.blade.php we use the component layout approach--}}
 
-@extends('layout')
+@extends('layouts.layout')
 
 @section('header')
-    <h1 class="header">MULTIPLE POSTS HEADER</h1>
+    <h1 class="header">posts:MULTIPLE POSTS HEADER</h1>
 @endsection
 
 
@@ -19,13 +19,13 @@
     @endif
 
     @foreach($posts as $post)
-        @dump($loop)
+{{--        @dump($loop)--}}
         <article class="{{ $loop->even ? 'foobar' : '' }}">
             <h1><a href="/post/{{ $post->slug  }}">{!! $post->title !!}</a></h1>
 
-{{--            create category link--}}
+            {{--            create category link--}}
             <p>
-                <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a>
+            <p>By <a href="/posts/author/{{ $post->user->username }}">{{ $post->user->name }}</a> in <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
             </p>
 
             <div>date: {{ $post->date  }}</div>
