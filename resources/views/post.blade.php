@@ -1,6 +1,6 @@
 {{--in this blade view we are using the component layout approach, in posts we will use the section and yield approach--}}
 
-<x-layouttwo>
+<x-post_layout>
     <x-slot name="header">
         <!-- Header content goes here -->
         <div id="header">
@@ -28,4 +28,4 @@
 
     <x-button>somecontent...</x-button>
 
-</x-layouttwo>
+</x-post_layout>

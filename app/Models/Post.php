@@ -38,6 +38,13 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    //when $user->author is called, return the user's name
+    public function getAuthorAttribute()
+    {
+        return $this->user->name;
+    }
+
+
     //extend create function to include slug from title value
     public static function create(array $attributes = [])
     {

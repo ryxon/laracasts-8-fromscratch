@@ -25,6 +25,13 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', function () {
+    return view('home', [
+        'posts' => Post::with('category','user')->get(),
+        'categories' => \App\Models\Category::all()
+    ]);
+});
+
+Route::get('/posts', function () {
 
     //logs all queries that are executed including the bindings
     \Illuminate\Support\Facades\DB::listen(function ($query) {
@@ -105,7 +112,8 @@ Route::get('createPosts', [TestController::class, 'createPosts']);
 
 //category route that shows all posts of a category
 Route::get('category/{category:slug}', function (\App\Models\Category $category) {
-    return view('posts', [
-        'posts' => $category->posts->load(['category', 'user'])
+    return view('home', [
+        'posts' => $category->posts->load(['category', 'user']),
+        'categories' => \App\Models\Category::all()
     ]);
 });
