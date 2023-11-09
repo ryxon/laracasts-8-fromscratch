@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Symfony\Component\Yaml\Yaml;
@@ -7,6 +8,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 //use controller
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +26,20 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
+
+
+//Route / to PostController index function
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+//category route that shows all posts of a category
+Route::get('category/{category:slug}', function (\App\Models\Category $category) {
     return view('home', [
-        'posts' => Post::with('category','user')->get(),
-        'categories' => \App\Models\Category::all()
+        'posts' => $category->posts->load(['category', 'user']),
+        'categories' => Category::all(),
+        'currentCategory' => Category::firstWhere('slug', request('category'))
     ]);
 });
+
 
 Route::get('/posts', function () {
 
@@ -45,15 +55,22 @@ Route::get('/posts', function () {
     ]);
 });
 
+
+
 // Get a post using Route Model Binding
 // Normally you would do this: {post:slug}
 // But when getRouteKeyName() is overwritten in the Post model, you can do this: {post} as is the case in the Post model right now
 // a Post model is provided (Post $post) in the function as a parameter for route model binding: Laravel will automatically fetch the post from the database based on the slug
-Route::get('post/{post}', function (Post $post) { // Post::where('slug', $slug)->firstOrFail();
-    return view('post', [
-        'post' => $post
-    ]);
-});
+
+//Route::get('post/{post}', function (Post $post) { // Post::where('slug', $slug)->firstOrFail();
+//    return view('post', [
+//        'post' => $post
+//    ]);
+//});
+//new routed to controller
+Route::get('post/{post}', [PostController::class, 'show']); //(Post $post) is giving in the controller as a parameter for route model binding
+
+
 
 Route::get('posts/author/{user:username}', function (\App\Models\User $user) {
     return view('posts', [
@@ -64,19 +81,14 @@ Route::get('posts/author/{user:username}', function (\App\Models\User $user) {
     ]);
 });
 
-//Find the post by using the Post model
-//Route::get('post/{post}', function ($slug) {
-//    //find a post by its slug from the Post model and return it
-//    return view('post', [
-//        'post' => App\Models\Post::find($slug)
-//    ]);
-//});
+
 
 //get request with test returns foo => bar array as json
 Route::get('test',function(){
     //call foobar function of the TestController
     return TestController::foobar();
 });
+
 
 
 Route::get('post2/{post}', function ($slug) {
@@ -107,13 +119,10 @@ Route::get('post2/{post}', function ($slug) {
     ]);
 })->where('post','[A-z_\-]+'); //regular expression for the post var. It can only be letters, underscores and dashes
 
+
+
 //go to testcontroller and execute createPosts function
 Route::get('createPosts', [TestController::class, 'createPosts']);
 
-//category route that shows all posts of a category
-Route::get('category/{category:slug}', function (\App\Models\Category $category) {
-    return view('home', [
-        'posts' => $category->posts->load(['category', 'user']),
-        'categories' => \App\Models\Category::all()
-    ]);
-});
+
+
