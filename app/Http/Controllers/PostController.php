@@ -9,11 +9,17 @@ class PostController extends Controller
 {
     public function index()
     {
+        //MOVED TO categoryDropdown.php
+//        $cat = Category::firstWhere('slug', request('category'));
+//        $catid = $cat ? $cat->id : 0;
+
         return view('home', [
 //            'posts' => $this->getPosts(),
             'posts' => $this->filterPosts(),
-            'categories' => Category::all(),
-            'currentCategoryId' => (int)Category::firstWhere('slug', request('category'))
+
+            //MOVED TO categoryDropdown.php for category-dropdown component, still provided for dropdown.blade.php as it doesnt have a component class in
+            'categories' => Category::all()
+//            'currentCategoryId' => $catid,
         ]);
     }
 
