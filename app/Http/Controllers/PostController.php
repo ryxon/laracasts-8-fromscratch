@@ -27,7 +27,8 @@ class PostController extends Controller
     {
 
         //this is a custom model function named 'filter' that is called in the Post model
-        return Post::latest()->filter(request()->all())->get();
+//        return Post::latest()->filter(request()->all())->get();
+        return Post::latest()->filter(request(['search','category', 'author']))->get();
         //using request(['search']) with brackets is the same as using request()->only('search')
         //the brackets make it an array, so it can be used in the filter function
     }
@@ -49,6 +50,16 @@ class PostController extends Controller
     {
         return view('post', [
             'post' => $post
+        ]);
+    }
+
+    public function author($username)
+    {
+        $filters['author'] = $username;
+        return view('home', [
+            'posts' => Post::latest()->filter($filters)->get(),
+            //MOVED TO categoryDropdown.php for category-dropdown component, still provided for dropdown.blade.php as it doesnt have a component class in
+            'categories' => Category::all()
         ]);
     }
 }

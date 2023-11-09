@@ -39,6 +39,14 @@ class Post extends Model
             });
         }
 
+        // Check if 'author' filter is provided
+        if (isset($filters['author'])) {
+            $authorUsername = $filters['author'];
+            $query->whereHas('user', function ($query) use ($authorUsername) {
+                $query->where('username', $authorUsername);
+            });
+        }
+
         $query->with('category','user');
         return $query;
     }
@@ -64,7 +72,7 @@ class Post extends Model
     //when $user->author is called, return the user's name
     public function getAuthorAttribute()
     {
-        return $this->user->name;
+        return $this->user;
     }
 
 

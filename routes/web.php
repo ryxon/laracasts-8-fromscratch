@@ -70,7 +70,7 @@ Route::get('/posts', function () {
 //new routed to controller
 Route::get('post/{post}', [PostController::class, 'show']); //(Post $post) is giving in the controller as a parameter for route model binding
 
-
+Route::get('author/{username}', [PostController::class, 'author']);
 
 Route::get('posts/author/{user:username}', function (\App\Models\User $user) {
     return view('posts', [
