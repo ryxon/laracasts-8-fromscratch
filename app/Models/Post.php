@@ -20,6 +20,29 @@ class Post extends Model
 //   then when loading posts without category and user, use this:
 //    Post::without('category', 'user')->get();
 
+    public function scopeFilter($query, array $filters)
+    {
+        // Check if 'search' filter is provided
+        if (isset($filters['search'])) {
+            $searchTerm = $filters['search'];
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('body', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Check if 'category' filter is provided
+        if (isset($filters['category'])) {
+            $categorySlug = $filters['category'];
+            $query->whereHas('category', function ($query) use ($categorySlug) {
+                $query->where('slug', $categorySlug);
+            });
+        }
+
+        $query->with('category','user');
+        return $query;
+    }
+
     //posts have one category
     public function category()
     {
