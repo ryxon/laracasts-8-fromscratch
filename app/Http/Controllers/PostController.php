@@ -13,9 +13,22 @@ class PostController extends Controller
 //        $cat = Category::firstWhere('slug', request('category'));
 //        $catid = $cat ? $cat->id : 0;
 
+        $posts = $this->filterPosts()->paginate(6)->withQueryString();
+        ############################
+//        TO STYLE PAGINATION YOU MUST Publish the vendor files
+//        php artisan vendor:publish
+        //vendor is now located in: resources/views/vendor/pagination
+
+        ############################
+
+
+
+//        return $posts;
+//        echo count($posts);die;
+
         return view('home', [
 //            'posts' => $this->getPosts(),
-            'posts' => $this->filterPosts(),
+            'posts' => $posts,
 
             //MOVED TO categoryDropdown.php for category-dropdown component, still provided for dropdown.blade.php as it doesnt have a component class in
             'categories' => Category::all()
@@ -28,7 +41,7 @@ class PostController extends Controller
 
         //this is a custom model function named 'filter' that is called in the Post model
 //        return Post::latest()->filter(request()->all())->get();
-        return Post::latest()->filter(request(['search','category', 'author']))->get();
+        return Post::latest()->filter(request(['search','category', 'author']));
         //using request(['search']) with brackets is the same as using request()->only('search')
         //the brackets make it an array, so it can be used in the filter function
     }

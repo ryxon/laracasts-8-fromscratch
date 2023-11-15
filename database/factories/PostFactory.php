@@ -36,3 +36,5 @@ class PostFactory extends Factory
         ];
     }
 }
+//create 50 posts with factory
+//Post::factory()->count(50)->create();

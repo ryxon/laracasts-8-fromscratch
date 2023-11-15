@@ -1,5 +1,5 @@
 <x-home_layout>
-
+{{--@dd($posts)--}}
 {{--    this is simply a blade component, it is included in the home_layout.blade.php file--}}
 {{--    <x-header></x-header>--}}
 
@@ -51,13 +51,16 @@
                 @foreach($posts->skip(6) as $post)
                     <x-posts.card :post="$post"></x-posts.card>
                     {{--                stop after 12 posts--}}
-                    @if($loop->index == 11)
-                        @break
-                    @endif
+{{--                    @if($loop->index == 11)--}}
+{{--                        @break--}}
+{{--                    @endif--}}
                 @endforeach
             </div>
         @endif
+        <div>{{ $posts->links() }}</div>
     </main>
+
+
 
     <x-slot name="footer">
         <x-footer></x-footer>

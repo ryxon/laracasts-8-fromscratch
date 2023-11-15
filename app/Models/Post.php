@@ -43,7 +43,9 @@ class Post extends Model
         if (isset($filters['author'])) {
             $authorUsername = $filters['author'];
             $query->whereHas('user', function ($query) use ($authorUsername) {
-                $query->where('username', $authorUsername);
+                $query->where('username','like', '%'.$authorUsername.'%');
+                //or where name is like
+                $query->orWhere('name','like', '%'.$authorUsername.'%');
             });
         }
 
