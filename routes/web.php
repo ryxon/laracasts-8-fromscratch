@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
@@ -20,6 +21,14 @@ use App\Http\Controllers\PostController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//REGISTER
+//route to register view
+Route::get('/register', [RegisterController::class, 'create']);
+
+//route to register store function
+Route::post('/register', [RegisterController::class, 'store']);
+
 
 //route to welcome view
 Route::get('/welcome', function () {

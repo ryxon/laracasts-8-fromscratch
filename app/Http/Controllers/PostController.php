@@ -13,7 +13,8 @@ class PostController extends Controller
 //        $cat = Category::firstWhere('slug', request('category'));
 //        $catid = $cat ? $cat->id : 0;
 
-        $posts = $this->filterPosts()->paginate(6)->withQueryString();
+        $posts = $this->filterPosts()->paginate(6)
+            ->withQueryString(); //includes the QueryString in the pagination links
         ############################
 //        TO STYLE PAGINATION YOU MUST Publish the vendor files
 //        php artisan vendor:publish
