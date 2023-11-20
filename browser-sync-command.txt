@@ -1,0 +1,1 @@
+browser-sync start --proxy "http://127.0.0.1:8000/" --files "resources/**/*.php" "public/**/*.css" "public/**/*.js" "app/**/*.php" "routes/**/*.php" "config/**/*.php" "tests/**/*.php"
