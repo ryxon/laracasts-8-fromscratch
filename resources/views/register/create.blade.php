@@ -21,8 +21,6 @@
 
 {{--        Show success message if user is registered--}}
 
-
-
         <form method="POST" action="/register">
             @csrf
 

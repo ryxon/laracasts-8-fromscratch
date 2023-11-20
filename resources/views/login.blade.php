@@ -1,11 +1,9 @@
 {{--create login form--}}
 
 <x-home_layout>
-    <h1>Login</h1>
-
     <main class="flex items-center justify-center">
         <section class="max-w-xl w-1/2 px-12 py-8 bg-gray-200 my-24">
-            <h1>Register a user!</h1>
+            <h1 class="pb-4 text-3xl">Register a user now!</h1>
 
             {{--        Show success message if user is registered--}}
 
@@ -80,6 +78,5 @@
 
         </section>
     </main>
-
     <x-slot name="footer"></x-slot>
 </x-home_layout>
