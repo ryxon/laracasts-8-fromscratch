@@ -11,6 +11,8 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostCommentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,8 +33,10 @@ Route::post('/register', [RegisterController::class, 'store'])->middleware('gues
 
 Route::get('logout', [SessionsController::class, 'destroy']);
 
-Route::get('login', [SessionsController::class, 'login'])->middleware('guest');
+Route::get('login', [SessionsController::class, 'login'])->middleware('guest')->name('login');
 Route::post('login', [SessionsController::class, 'login'])->middleware('guest');
+
+Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
 
 //re-route /home to /
 //Route::get('/home', function () {

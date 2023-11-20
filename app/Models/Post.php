@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
+use App\Models\User;
+use App\Models\Comment;
 
 class Post extends Model
 {
@@ -19,6 +22,12 @@ class Post extends Model
 //    protected $with = ['category', 'user'];
 //   then when loading posts without category and user, use this:
 //    Post::without('category', 'user')->get();
+
+    public function comments()
+    {
+        //A post has many comments
+        return $this->hasMany(Comment::class);
+    }
 
     public function scopeFilter($query, array $filters)
     {

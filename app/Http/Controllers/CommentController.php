@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateCommentRequest;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -24,12 +28,24 @@ class CommentController extends Controller
         //
     }
 
+    public function test()
+    {
+        return 'test';
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+    echo 123;
+//        //store comment
+//        $comment = Comment::create([
+//            'body' => $request->body,
+//            'user_id' => auth()->id(),
+//            'post_id' => $request->post_id
+//        ]);
+//        return back();
     }
 
     /**
