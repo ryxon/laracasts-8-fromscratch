@@ -10,7 +10,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 //use controller
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\SessionsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,11 +24,20 @@ use App\Http\Controllers\PostController;
 
 //REGISTER
 //route to register view
-Route::get('/register', [RegisterController::class, 'create']);
+Route::get('/register', [RegisterController::class, 'create'])->middleware('guest');
 
 //route to register store function
-Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/register', [RegisterController::class, 'store'])->middleware('guest');
 
+Route::get('logout', [SessionsController::class, 'destroy']);
+
+Route::get('login', [SessionsController::class, 'login'])->middleware('guest');
+Route::post('login', [SessionsController::class, 'login'])->middleware('guest');
+
+//re-route /home to /
+//Route::get('/home', function () {
+//    return redirect('/');
+//});
 
 //route to welcome view
 Route::get('/welcome', function () {
