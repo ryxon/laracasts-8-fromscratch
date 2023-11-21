@@ -67,6 +67,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->api_token = Str::random(60);
+        });
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
