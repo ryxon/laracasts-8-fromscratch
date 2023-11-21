@@ -1,20 +1,4 @@
-
-
 <x-home_layout>
-    @if(session('success'))
-        <div class="regsuccess fixed top-0 left-1/2 transform -translate-x-1/2 w-1/2 text-center py-2 px-6 bg-blue-300 border-black border-solid border-2">
-            {{ session('success') }}
-        </div>
-
-        <script type="text/javascript">
-            jQuery(function($){
-                setTimeout(function(){
-                    $('.regsuccess').fadeOut();
-                }, 6000);
-            });
-        </script>
-    @endif
-
     <main class="flex items-center justify-center">
     <section class="max-w-xl w-1/2 px-12 py-8 bg-gray-200 my-24">
         <h1>Register a user!</h1>

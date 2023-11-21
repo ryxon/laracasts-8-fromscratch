@@ -10,6 +10,7 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 <body style="font-family: Open Sans, sans-serif">
+<x-flash-main></x-flash-main>
 <section class="px-6 py-8">
     <nav class="md:flex md:justify-between md:items-center">
         <div>
@@ -26,7 +27,7 @@
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="ml-6 text-xs font-bold uppercase">Log In</a>
             @endif
-            <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+            <a href="#footer" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                 Subscribe for Updates
             </a>
         </div>

@@ -13,6 +13,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\NewsletterController;
+use App\Services\Newsletter;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +26,9 @@ use App\Http\Controllers\PostCommentsController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+//Test mailchimp api
+Route::post('subscribe',NewsletterController::class);
 
 //REGISTER
 //route to register view
