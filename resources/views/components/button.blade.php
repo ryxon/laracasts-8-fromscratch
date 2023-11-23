@@ -1,1 +1,1 @@
-<button>COMPONENT-BUTTON, content: {{$slot}}</button>
+<button>[STATIC CONTENT IN button.blade.php] {{$slot}}</button>
