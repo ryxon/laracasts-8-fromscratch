@@ -26,6 +26,14 @@ use App\Services\Newsletter;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//create auth middleware group
+Route::middleware('admin')->group(function () {
+
+    Route::get('admin/posts/create', [PostController::class, 'create']);
+    Route::post('admin/posts', [PostController::class, 'store']);
+    Route::get('admin', function () { return view('admin.index'); });
+});
+
 
 //Test mailchimp api
 Route::post('subscribe',NewsletterController::class);
