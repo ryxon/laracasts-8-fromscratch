@@ -76,4 +76,42 @@ class PostController extends Controller
             'categories' => Category::all()
         ]);
     }
+
+    public function create()
+    {
+        //get logged in user
+        $user = auth()->user();
+
+        return view('posts.create', [
+            'user' => $user
+        ]);
+    }
+
+    public function store()
+    {
+//        dump(request()->all());
+        $data = request()->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required|max:255',
+            'body' => 'required',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+        $data['user_id'] = auth()->user()->id;
+        $data['slug'] = \Illuminate\Support\Str::slug(request('title'));
+
+        //check if slug is unique
+        $slug = $data['slug'];
+        $count = Post::where('slug', 'like', $slug.'%')->count();
+        if($count > 0){
+            $data['slug'] = $slug.'-'.($count + 1); // this will be slug-2
+        }
+
+        //persist the new post
+        Post::create($data);
+
+        //redirect to previous page
+        return redirect('/admin/posts/create')
+            ->with('success', 'Post was created!')
+            ->with('created_post', $data);
+    }
 }
