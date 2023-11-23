@@ -12,6 +12,25 @@
                     <a href="/category/{{ $post->category->slug }}"
                        class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
                        style="font-size: 10px">{{ $post->category->name }}</a>
+
+{{--                    Check if user is logged in and admin:--}}
+                    @if(auth()->check() && auth()->user()->is_admin)
+                        <div class="flex justify-end">
+                        <form method="POST" action="/admin/post/{{ $post->slug }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                    class="transition-colors duration-300 text-xs font-semibold bg-red-200 hover:bg-red-300 rounded-full py-2 px-8"
+                            >DELETE</button>
+                        </form>
+                        <a href="/admin/post/{{ $post->slug }}"
+                           class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
+                        >EDIT</a>
+                        </div>
+                    @endif
+
+
+
                 </div>
 
                 <div class="mt-4">
@@ -51,6 +70,7 @@
                     >Read More</a>
                 </div>
             </footer>
+
         </div>
     </div>
 </article>
