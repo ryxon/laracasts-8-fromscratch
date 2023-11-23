@@ -35,6 +35,7 @@
 
     {{ $slot }}
 
-    {{ $footer }}
+    <x-footer></x-footer>
+{{--    {{ $footer }}--}}
 </section>
 </body>
