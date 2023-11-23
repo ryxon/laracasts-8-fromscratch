@@ -27,7 +27,7 @@ class AuthenticateApi
             return response()->json(['message' => 'Unauthorized']);
         }else{
             Auth::login($user);
-            return $next($request);
+            return $next($request); // what does this do? allows the request to proceed to the next middleware or the intended controller logic
         }
     }
 }
