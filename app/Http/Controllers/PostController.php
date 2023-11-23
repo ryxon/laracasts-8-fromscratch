@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
+
 class PostController extends Controller
 {
     public function index()
@@ -89,15 +91,20 @@ class PostController extends Controller
 
     public function store()
     {
-//        dump(request()->all());
+        //validate the form
         $data = request()->validate([
             'title' => 'required|max:255',
             'excerpt' => 'required|max:255',
+            'thumbnail' => 'required|image', //max 2mb
             'body' => 'required',
             'category_id' => 'required|exists:categories,id'
         ]);
         $data['user_id'] = auth()->user()->id;
         $data['slug'] = \Illuminate\Support\Str::slug(request('title'));
+        $data['thumbnail'] = request()->file('thumbnail')->store('public/thumbnails');
+
+        //thumbnail public folder not accessible, so replace public with storage
+        $data['thumbnail'] = str_replace('public', 'storage', $data['thumbnail']);
 
         //check if slug is unique
         $slug = $data['slug'];
@@ -110,8 +117,16 @@ class PostController extends Controller
         Post::create($data);
 
         //redirect to previous page
-        return redirect('/admin/posts/create')
+        return redirect('/admin/post/create')
             ->with('success', 'Post was created!')
             ->with('created_post', $data);
+    }
+
+    public function  destroy(Post $post)
+    {
+//        dd($post);
+        $post->delete();
+        return redirect('/admin/post/create')
+            ->with('success', 'Post was deleted!');
     }
 }

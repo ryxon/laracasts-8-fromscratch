@@ -1,9 +1,15 @@
 @if(isset($post))
+
+
 <article
     class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
     <div class="py-6 px-5 lg:flex">
         <div class="flex-1 lg:mr-8">
-            <img src="/img/illustration-1.png" alt="Blog Post illustration" class="rounded-xl">
+            @if($post->thumbnail)
+                <img src="{{ asset($post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl">
+            @else
+                <img src="/img/illustration-1.png" alt="Blog Post illustration" class="rounded-xl">
+            @endif
         </div>
 
         <div class="flex-1 flex flex-col justify-between">
@@ -16,14 +22,49 @@
 {{--                    Check if user is logged in and admin:--}}
                     @if(auth()->check() && auth()->user()->is_admin)
                         <div class="flex justify-end">
-                        <form method="POST" action="/admin/post/{{ $post->slug }}">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                    class="transition-colors duration-300 text-xs font-semibold bg-red-200 hover:bg-red-300 rounded-full py-2 px-8"
-                            >DELETE</button>
-                        </form>
-                        <a href="/admin/post/{{ $post->slug }}"
+                            <!-- Add an ID to the form for easy targeting -->
+                            <form id="deleteForm" method="POST" action="/admin/post/{{ $post->slug }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button"
+                                        class="delete-btn transition-colors duration-300 text-xs font-semibold bg-red-200 hover:bg-red-300 rounded-full py-2 px-8"
+                                >DELETE</button>
+                            </form>
+
+                            <!-- Include jQuery library -->
+                            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+                                    // Intercept form submission
+                                    $('#deleteForm button').on('click', function (e) {
+                                        e.preventDefault(); // Prevent the default form submission
+
+                                        // Show a confirmation dialog
+                                        if (confirm('Are you sure you want to delete this item?')) {
+                                            // Submit the form
+                                            $('#deleteForm').submit();
+                                            // // If confirmed, send an AJAX request
+                                            // $.ajax({
+                                            //     type: 'DELETE',
+                                            //     url: $('#deleteForm').attr('action'),
+                                            //     data: $('#deleteForm').serialize(), // Serialize the form data
+                                            //     success: function () {
+                                            //         // Handle success (e.g., remove the deleted item from the UI)
+                                            //         alert('Item deleted successfully!');
+                                            //         // Add further UI updates as needed
+                                            //     },
+                                            //     error: function (xhr, status, error) {
+                                            //         // Handle errors
+                                            //         alert('Error deleting item: ' + error);
+                                            //     }
+                                            // });
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <a href="/admin/post/{{ $post->slug }}"
                            class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
                         >EDIT</a>
                         </div>

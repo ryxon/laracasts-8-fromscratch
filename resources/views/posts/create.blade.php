@@ -1,8 +1,11 @@
 <x-home_layout>
-    <h1>Create a post</h1>
 
-    <div class="mx-auto w-1/2">
-        <form method="POST" action="/admin/posts">
+
+    <div class="mx-auto w-1/2 p-12">
+        <h1 class="text-xl py-4">Create a post</h1>
+
+
+        <form method="POST" action="/admin/post" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-6">
@@ -21,6 +24,27 @@
                 >
 
                 @error('title')
+                <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+{{--            THUMBNAIL--}}
+            <div class="mb-6">
+                <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+                       for="thumbnail"
+                >
+                    Thumbnail
+                </label>
+
+                <input class="border border-gray-400 p-2 w-full"
+                       type="file"
+                       name="thumbnail"
+                       id="thumbnail"
+                       value="{{ old('thumbnail') }}"
+                       required
+                >
+
+                @error('thumbnail')
                 <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                 @enderror
             </div>

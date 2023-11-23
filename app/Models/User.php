@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use SebastianBergmann\ObjectReflector\ObjectReflector;
+use Illuminate\Support\Str;
 
 //to create a new user, run the following command:
 //php artisan tinker

@@ -29,9 +29,10 @@ use App\Services\Newsletter;
 //create auth middleware group
 Route::middleware('admin')->group(function () {
 
-    Route::get('admin/posts/create', [PostController::class, 'create']);
-    Route::post('admin/posts', [PostController::class, 'store']);
+    Route::get('admin/post/create', [PostController::class, 'create']);
+    Route::post('admin/post', [PostController::class, 'store']);
     Route::get('admin', function () { return view('admin.index'); });
+    Route::delete('admin/post/{post}', [PostController::class, 'destroy']);
 });
 
 
