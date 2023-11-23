@@ -1,3 +1,7 @@
 html {
     scroll-behavior: smooth;
 }
+a {
+    color: #3490dc;
+    text-decoration: underline;
+}
