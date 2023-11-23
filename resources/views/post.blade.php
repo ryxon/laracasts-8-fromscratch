@@ -4,28 +4,27 @@
     <x-slot name="header">
         <!-- Header content goes here -->
         <div id="header">
-            <h1>This is the COMPONENT LAYOUT TWO Header:</h1>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
+            <h1>This content is set in posts.blade.php</h1>
+            <p>Because it is within x-slot with the name header</p>
+            <p>It is displayed in the post_layout.blade.php file because it is called with $header</p>
         </div>
     </x-slot>
 
-    <article>
-        <h1><a href="/post/{{ $post->slug  }}">{!! $post->title !!}</a></h1>
-        <p>By <a href="/posts/author/{{ $post->user->username }}">{{ $post->user->name }}</a> in <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
-        <div>date: {{ $post->date  }}</div>
-        <div>{{ $post->excerpt }}</div>
-        <div>{!! $post->body !!}</div>
-    </article>
+    <x-posts.featured :post="$post"></x-posts.featured>
+
+    {{--@foreach($posts as $post)--}}
+
+{{--    <article>--}}
+{{--        <h1><a href="/post/{{ $post->slug  }}">{!! $post->title !!}</a></h1>--}}
+{{--        <p>By <a href="/posts/author/{{ $post->user->username }}">{{ $post->user->name }}</a> in <a href="/category/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>--}}
+{{--        <div>date: {{ $post->date  }}</div>--}}
+{{--        <div>{{ $post->excerpt }}</div>--}}
+{{--        <div>{!! $post->body !!}</div>--}}
+{{--    </article>--}}
     {{--@endforeach--}}
     <hr>
     @auth
-        <x-button>somecontent...</x-button>
+        <x-button>[somecontent from posts.blade.php within the x-button tag]</x-button>
 {{--    Create comment form:--}}
     <form method="POST" action="/post/{{ $post->slug }}/comment" class="border border-gray-200 p-6 rounded-xl">
         @csrf
