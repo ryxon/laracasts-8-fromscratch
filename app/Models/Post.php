@@ -13,7 +13,7 @@ class Post extends Model
     use HasFactory;
 
     //allow mass assignment of all fields
-    protected $fillable = ['title', 'excerpt', 'body', 'category_id', 'slug'];
+    protected $fillable = ['title', 'excerpt', 'body', 'category_id', 'slug', 'user_id'];
 
     //guard id from mass assignment
     protected $guarded = ['id'];
