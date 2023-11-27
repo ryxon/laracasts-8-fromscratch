@@ -89,6 +89,68 @@ class PostController extends Controller
         ]);
     }
 
+    public function edit(Post $post)
+    {
+        //get logged in user
+        $user = auth()->user();
+
+        return view('posts.edit', [
+            'user' => $user,
+            'post' => $post
+        ]);
+    }
+
+    public function update(Post $post)
+    {
+        //validate the form and set Post data
+        $data = request()->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required|max:255',
+            'thumbnail' => 'image', //max 2mb
+            'body' => 'required',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+        $data['user_id'] = auth()->user()->id;
+        $data['slug'] = \Illuminate\Support\Str::slug(request('title'));
+        if(request()->file('thumbnail')){
+            $data['thumbnail'] = request()->file('thumbnail')->store('public/thumbnails');
+            //thumbnail public folder not accessible, so replace public with storage
+            $data['thumbnail'] = str_replace('public', 'storage', $data['thumbnail']);
+        }
+
+        //check if slug is unique
+        $slug = $data['slug'];
+
+        //Count the number of posts with the same slug except the current post
+        $count = Post::where('slug', 'like', $slug.'%')->where('id', '!=', $post->id)->count();
+        if($count > 0){
+
+            $data['slug'] = $slug.'-'.($count + 1); // this will be slug-2
+        }
+
+        //persist the new post
+        $post->update($data);
+
+        //redirect to previous page
+        return redirect('/admin/post/'.$data['slug'])
+            ->with('success', 'Post was updated!')
+            ->with('created_post', $data);
+    }
+
+    public function list()
+    {
+        //get logged in user
+        $user = auth()->user();
+
+        //get all posts from user
+        $posts = Post::where('user_id', $user->id)->get();
+
+        return view('posts.list', [
+            'user' => $user,
+            'posts' => $posts
+        ]);
+    }
+
     public function store()
     {
         //validate the form
