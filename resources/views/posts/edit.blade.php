@@ -2,16 +2,20 @@
 
 
     <div class="mx-auto w-1/2 p-12">
-        <h1 class="text-xl py-4">Create a post</h1>
+        <h1 class="text-xl py-4">Edit a post</h1>
 
 
-        <form method="POST" action="/admin/post" enctype="multipart/form-data">
+        <form method="POST" action="/admin/post/{{ $post->id }}" enctype="multipart/form-data">
             @csrf
 
-            <x-form.input name="title" />
+{{--            Method PUT--}}
+            @method('PATCH')
+
+            <x-form.input name="title" :value="$post->title"/>
             <x-form.input name="thumbnail" type="file" />
-            <x-form.textarea name="excerpt" />
-            <x-form.textarea name="body" />
+            <img src="{{ asset($post->thumbnail) }}" alt="thumbnail" width="100" height="100">
+            <x-form.textarea name="excerpt" :value="$post->excerpt"/>
+            <x-form.textarea name="body" :value="$post->body"/>
 
             <x-form.field name="category_id">
                 <x-form.label name="Category" />
