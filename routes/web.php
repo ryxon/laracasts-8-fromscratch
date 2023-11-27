@@ -33,6 +33,12 @@ Route::middleware('admin')->group(function () {
     Route::post('admin/post', [PostController::class, 'store']);
     Route::get('admin', function () { return view('admin.index'); });
     Route::delete('admin/post/{post}', [PostController::class, 'destroy']);
+    Route::get('admin/post/{post}', [PostController::class, 'edit']);
+    //patch request to update post by id  (post/{post:id})
+    Route::patch('admin/post/{post:id}', [PostController::class, 'update']);
+    Route::get('admin/posts', [PostController::class, 'index']);
+    //dashboard
+    Route::get('admin/dashboard', function () { return view('admin.dashboard'); });
 });
 
 
