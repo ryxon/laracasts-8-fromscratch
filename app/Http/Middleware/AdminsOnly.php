@@ -15,9 +15,9 @@ class AdminsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        //if user is not an admin, abort
-        if(! auth()->user()->isAdmin()) {
-            abort(403);
+        // Check if there is an authenticated user
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            abort(Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);
