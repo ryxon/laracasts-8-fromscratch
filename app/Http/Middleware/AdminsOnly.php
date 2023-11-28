@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
 
 class AdminsOnly
 {
@@ -15,10 +17,16 @@ class AdminsOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if there is an authenticated user
-        if (!auth()->check() || !auth()->user()->isAdmin()) {
-            abort(Response::HTTP_FORBIDDEN);
-        }
+        // Check if the authenticated user is an admin
+        Gate::authorize('admin');
+        //defines in app/Providers/AppServiceProvider.php:boot()
+//        Gate::define('admin', function (User $user) {
+//            if (!$user?->isAdmin()) {
+//                abort(Response::HTTP_FORBIDDEN);
+//            }else{
+//                return true;
+//            }
+//        });
 
         return $next($request);
     }

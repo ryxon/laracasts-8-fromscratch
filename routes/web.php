@@ -26,7 +26,7 @@ use App\Services\Newsletter;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//create auth middleware group
+//use admin middleware
 Route::middleware('admin')->group(function () {
 
     Route::get('admin/post/create', [PostController::class, 'create']);
@@ -38,6 +38,11 @@ Route::middleware('admin')->group(function () {
     Route::patch('admin/post/{post:id}', [PostController::class, 'update']);
     Route::get('admin/posts', [PostController::class, 'index']);
     //dashboard
+    Route::get('admin/dashboard', function () { return view('admin.dashboard'); });
+});
+
+//instead uses admin gate defined in AppServiceProvider.php:boot
+Route::middleware('can:admin')->group(function () {
     Route::get('admin/dashboard', function () { return view('admin.dashboard'); });
 });
 
