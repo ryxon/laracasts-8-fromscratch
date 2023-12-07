@@ -188,7 +188,7 @@ class PostController extends Controller
     {
 //        dd($post);
         $post->delete();
-        return redirect('/admin/post/create')
+        return redirect('/admin/posts')
             ->with('success', 'Post was deleted!');
     }
 }

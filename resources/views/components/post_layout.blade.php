@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/app.css">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 {{--    <script src="js/app.js"></script>--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 @if(session('success'))
@@ -17,7 +18,7 @@
         jQuery(function($){
             setTimeout(function(){
                 $('.regsuccess').fadeOut();
-            }, 6000);
+            }, 3000);
         });
     </script>
 @endif

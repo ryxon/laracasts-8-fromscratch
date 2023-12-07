@@ -17,6 +17,10 @@ class PostCommentsController extends Controller
             'body' => $request->body,
             'user_id' => auth()->id()
         ]);
+
+        //flash a success message
+        session()->flash('success', 'Comment was added');
+        //go back to the post
         return back();
     }
 }
