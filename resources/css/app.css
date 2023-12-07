@@ -1,7 +1,46 @@
 html {
     scroll-behavior: smooth;
 }
-a {
-    color: #3490dc;
-    text-decoration: underline;
+/*a {*/
+/*    color: #3490dc;*/
+/*    text-decoration: underline;*/
+/*}*/
+/* Add any additional styling you need */
+/* Add any additional styling you need */
+
+/* Style the button */
+.btn.btn-primary {
+    /*display: inline-block;*/
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
 }
+
+.btn.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn.btn-primary:focus,
+.btn.btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+/* Position the button on the right side */
+.right-align {
+    text-align: right;
+}
+
+/* Apply right-align class to the parent container of the button */
+.right-align .btn.btn-primary {
+    float: right;
+}
+
+/* Add more styles as needed, such as active, disabled, etc. */

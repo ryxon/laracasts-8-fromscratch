@@ -15,6 +15,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\NewsletterController;
 use App\Services\Newsletter;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/posts', [PostController::class, 'index']);
     //dashboard
     Route::get('admin/dashboard', function () { return view('admin.dashboard'); });
+    Route::get('admin/categories', [CategoryController::class, 'index']);
+    Route::post('admin/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('admin/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('admin/categories/{category:id}', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::patch('admin/categories/{category:id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('admin/categories/{category:id}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 //instead uses admin gate defined in AppServiceProvider.php:boot

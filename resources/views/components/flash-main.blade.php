@@ -17,6 +17,6 @@
     jQuery(function($){
         setTimeout(function(){
             $('.regsuccess').fadeOut();
-        }, 6000);
+        }, 3000);
     });
 </script>
