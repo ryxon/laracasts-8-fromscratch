@@ -46,6 +46,13 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/categories/{category:id}', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::patch('admin/categories/{category:id}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('admin/categories/{category:id}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    //comments
+    Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
+    Route::get('admin/comments', [CommentController::class, 'index']);
+    Route::delete('admin/comments/{comment:id}', [CommentController::class, 'destroy'])->name('admin.comment.destroy');
+    Route::patch('admin/comments/{comment:id}/approve', [CommentController::class, 'approve'])->name('admin.comment.approve');
+    Route::patch('admin/comments/{comment:id}/decline', [CommentController::class, 'decline'])->name('admin.comment.decline');
 });
 
 //instead uses admin gate defined in AppServiceProvider.php:boot
@@ -69,7 +76,7 @@ Route::get('logout', [SessionsController::class, 'destroy']);
 Route::get('login', [SessionsController::class, 'login'])->middleware('guest')->name('login');
 Route::post('login', [SessionsController::class, 'login'])->middleware('guest');
 
-Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
+
 
 //re-route /home to /
 //Route::get('/home', function () {
@@ -123,7 +130,7 @@ Route::get('/posts', function () {
 //    ]);
 //});
 //new routed to controller
-Route::get('post/{post}', [PostController::class, 'show']); //(Post $post) is giving in the controller as a parameter for route model binding
+Route::get('post/{post}', [PostController::class, 'show'])->name('home.post'); //(Post $post) is giving in the controller as a parameter for route model binding
 
 Route::get('author/{username}', [PostController::class, 'author']);
 

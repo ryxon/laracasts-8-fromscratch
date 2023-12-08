@@ -17,7 +17,38 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+
+        //get all comments without pagination
+        $comments = Comment::all();
+
+        //sent to view
+        return view('admin.comments.index', compact('comments'));
+    }
+
+    public function approve()
+    {
+        //get comment id and echo it
+        $comment = Comment::find(request('comment'));
+
+        //set field approved to 1 and flash back a success message
+        $comment->approved = 1;
+        $comment->declined = 0;
+        $comment->save();
+        session()->flash('success', 'Comment was approved');
+        return back();
+    }
+
+    public function decline()
+    {
+        //get comment id and echo it
+        $comment = Comment::find(request('comment'));
+
+        //set field approved to 1 and flash back a success message
+        $comment->approved = 0;
+        $comment->declined = 1;
+        $comment->save();
+        session()->flash('success', 'Comment was declined');
+        return back();
     }
 
     /**
@@ -77,6 +108,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        //delete the comment and flash back
+        $comment->delete();
+        session()->flash('success', 'Comment was deleted');
+        return back();
     }
 }

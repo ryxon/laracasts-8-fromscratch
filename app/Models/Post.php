@@ -25,8 +25,11 @@ class Post extends Model
 
     public function comments()
     {
-        //A post has many comments
-        return $this->hasMany(Comment::class);
+//        //A post has many comments
+//        return $this->hasMany(Comment::class);
+
+        // A post has many comments with declined field set to 0
+        return $this->hasMany(Comment::class)->where('declined', 0);
     }
 
     public function scopeFilter($query, array $filters)

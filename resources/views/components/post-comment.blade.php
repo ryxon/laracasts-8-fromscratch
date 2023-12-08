@@ -9,7 +9,7 @@
             <p class="text-xs">Posted on <time>{{ $comment->created_at }}</time></p>
         </header>
         <p>
-            {{ $comment->body }}
+            {!! $comment?->approved ? $comment->body : '<span style="color: grey; font-size:12px;">[This comment is awaiting approval]</span>' !!}
         </p>
     </div>
 </article>

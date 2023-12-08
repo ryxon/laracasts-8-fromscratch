@@ -19,6 +19,12 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function user()
+    {
+        //An comment belongs to a single user(author)
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function post()
     {
         // A comment belongs to a single post
