@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //import user model
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -25,18 +26,15 @@ class RegisterController extends Controller
             'password' => 'required|min:7|max:255|min:7' //automatically hashed
         ]);
 
+        $attributes['remember_token'] = Str::random(10); // what does this do?
+        // It generates a random string of 10 characters and assigns it to the remember_token attribute.
+
         //store user
         $user = User::create($attributes);
 
         auth()->login($user);
 
-        session()->flash('success', 'Your account has been created.'); // what does this do? It flashes the message to the session for one request. This is useful for quick messages like "Item has been deleted".
-
-        //return to register.create and show message
-        return redirect('/register')
-            ->with('success', 'Your account has been created.'); // what does with do?
-        // It flashes the message to the session for one request.
-        // This is useful for quick messages like "Item has been deleted".
-        // how is it displayed in the view? By using the session helper function: session('success') in the view
+        //redirect to homepage and show success message
+        return redirect('/')->with('success', 'Your account has been created.');
     }
 }
