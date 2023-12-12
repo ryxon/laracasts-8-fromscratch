@@ -27,7 +27,8 @@
             <div style="display: inline-block">Welcome, <b>{{ auth()?->user()?->name }}</b></div>
 
 {{--            @if(auth()->user()->can('admin'))--}}
-            @can('admin')
+{{--            @can('admin') --}}{{--this gate throws a FORBIDDEN error--}}
+            @if(auth()->user()->isAdmin())
                 <div style="display: inline-block; margin-left: 10px; color: red; font-weight: bold;">[Admin]</div>
             <x-admin.dropdown>
                 <x-slot name="trigger">
@@ -37,7 +38,7 @@
                 </x-slot>
 
                 <x-slot name="links">
-                    <x-admin.dropdown-link href="/admin/dashboard">Dashboard</x-admin.dropdown-link>
+{{--                    <x-admin.dropdown-link href="/admin/dashboard">Dashboard</x-admin.dropdown-link>--}}
                     <x-admin.dropdown-link href="/admin/posts">Posts</x-admin.dropdown-link>
                     <x-admin.dropdown-link href="/admin/post/create">New Post</x-admin.dropdown-link>
                     <x-admin.dropdown-link href="/admin/users">Users</x-admin.dropdown-link>
@@ -45,8 +46,8 @@
                     <x-admin.dropdown-link href="/admin/comments">Comments</x-admin.dropdown-link>
                 </x-slot>
             </x-admin.dropdown>
-            @endcan
-{{--            @endif--}}
+{{--            @endcan--}}
+            @endif
 
             <a href="/logout" class="text-xs font-bold uppercase ml-4">Log Out</a>
             @else
