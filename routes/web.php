@@ -16,6 +16,7 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\NewsletterController;
 use App\Services\Newsletter;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,11 +49,25 @@ Route::middleware('admin')->group(function () {
     Route::delete('admin/categories/{category:id}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     //comments
-    Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
+//    Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
     Route::get('admin/comments', [CommentController::class, 'index']);
     Route::delete('admin/comments/{comment:id}', [CommentController::class, 'destroy'])->name('admin.comment.destroy');
     Route::patch('admin/comments/{comment:id}/approve', [CommentController::class, 'approve'])->name('admin.comment.approve');
     Route::patch('admin/comments/{comment:id}/decline', [CommentController::class, 'decline'])->name('admin.comment.decline');
+
+    //users
+    //user index using controller
+    Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    //edit
+    Route::get('admin/users/{user:id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    //create
+    Route::get('admin/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    //store
+    Route::post('admin/users', [UserController::class, 'store'])->name('admin.users.store');
+    //update
+    Route::patch('admin/users/{user:id}', [UserController::class, 'update'])->name('admin.users.update');
+    //delete
+    Route::delete('admin/users/{user:id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 //instead uses admin gate defined in AppServiceProvider.php:boot
@@ -60,6 +75,10 @@ Route::middleware('can:admin')->group(function () {
     Route::get('admin/dashboard', function () { return view('admin.dashboard'); });
 });
 
+//logged in users that are not admins
+Route::middleware('auth')->group(function () {
+    Route::post('post/{post}/comment', [PostCommentsController::class, 'store']);
+});
 
 //Test mailchimp api
 Route::post('subscribe',NewsletterController::class);
@@ -87,8 +106,6 @@ Route::post('login', [SessionsController::class, 'login'])->middleware('guest');
 Route::get('/welcome', function () {
     return view('welcome');
 });
-
-
 
 //Route / to PostController index function
 Route::get('/', [PostController::class, 'index'])->name('home');
