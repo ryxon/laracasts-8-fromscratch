@@ -12,8 +12,16 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // create 50 comments
+        \App\Models\Comment::factory()->count(50)->create();
     }
+
+    public function test() {
+        // create 50 comments
+        \App\Models\Comment::factory()->count(50)->create();
+    }
+
+
 }
 // run this seeder individually with:
 // php artisan db:seed --class=CommentSeeder
